@@ -11,10 +11,6 @@ WORKDIR /app
 
 # Set production environment
 ENV NODE_ENV="production"
-ENV PNPM_HOME="/root/.local/share/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
-
-RUN corepack enable
 
 # Throw-away build stage to reduce size of final image
 FROM base AS build
@@ -24,19 +20,23 @@ RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential node-gyp pkg-config python-is-python3 && \
     rm -rf /var/lib/apt/lists/*
 
-# Install node modules
-COPY package.json pnpm-lock.yaml ./
-COPY pnpm-workspace.yaml ./
-RUN pnpm install --frozen-lockfile
+# Install dependencies
+COPY package*.json ./
+RUN if [ -f package-lock.json ]; then \
+      npm ci --include=dev; \
+    else \
+      echo "package-lock.json not found, falling back to npm install"; \
+      npm install --include=dev; \
+    fi
 
 # Copy application code
 COPY . .
 
 # Build application
-RUN pnpm build
+RUN npm run build
 
 # Remove development dependencies
-RUN pnpm prune --prod
+RUN npm prune --omit=dev
 
 # Final stage for app image
 FROM nginx:1.27-alpine
