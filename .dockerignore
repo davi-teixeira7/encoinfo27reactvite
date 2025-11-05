@@ -1,18 +1,12 @@
-# Dependency directories
-node_modules
-dist
-
-# Environment files
+/.git
+/node_modules
+/dist
+.dockerignore
 .env
 .env.*
-
-# Tooling metadata
-.git
-.gitignore
+Dockerfile
+fly.toml
 .vscode
 .idea
-.DS_Store
-
-# Build outputs
-coverage
 *.log
+coverage
