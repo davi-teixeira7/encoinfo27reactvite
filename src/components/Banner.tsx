@@ -6,7 +6,7 @@ interface LojaBannerProps {
 export default function Banner({ src, alt }: LojaBannerProps) {
   return (
     <section className="w-full border-b border-black bg-gray-950">
-      <div className="flex h-64 w-full items-center justify-center sm:h-80">
+      <div className="flex w-full items-center justify-center sm:h-80">
         {src ? (
           <img
             src={src}

@@ -9,7 +9,7 @@ export default function ProdutoCard({ imgURL, nome, cor }: ProdutoCardProps) {
 
   return (
     <div
-      className="group block w-64 rounded-lg border border-gray-200 bg-white p-6 text-center shadow-md transition hover:-translate-y-1 hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 hover:border-gray-300"
+      className="group flex h-full w-full max-w-[16rem] flex-col rounded-lg border border-gray-200 bg-white p-4 text-center shadow-md transition hover:-translate-y-1 hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 hover:border-gray-300 sm:p-6"
       style={{ borderColor: accent }}
     >
       <div className="aspect-square w-full overflow-hidden rounded-lg bg-gray-100 shadow-inner">

@@ -1,8 +1,6 @@
 import { useEffect, useMemo, useState } from "react"
 import { Link, useLocation, useParams } from "react-router-dom"
 import { FaHome } from "react-icons/fa"
-import FormLoja from "./FormLoja"
-import FormProduto from "./FormProduto"
 import { fetchLoja } from "../api/client"
 
 export default function Navbar() {
@@ -41,10 +39,10 @@ export default function Navbar() {
   }, [isLoja, lojaId])
 
   const pageTitle = useMemo(() => {
-    if (isHome) return "Lista de Lojas"
+    if (isHome) return "Lojas"
     if (isLoja) {
-      const suffix = lojaNome
-      return `Loja ${suffix}`
+      const suffix = lojaNome ? `Loja de ${lojaNome}` : "Loja"
+      return suffix
     }
     return ""
   }, [isHome, isLoja, lojaNome])
@@ -53,30 +51,23 @@ export default function Navbar() {
 
   return (
     <nav className="sticky top-0 z-40 w-full border-b border-gray-200 bg-white shadow-sm">
-      <div className="relative flex w-full items-center py-4 px-4 sm:px-6">
-        <div className="flex flex-wrap items-center gap-4">
-          <Link
-            to="/"
-            className="flex h-14 w-14 items-center justify-center text-3xl transition hover:opacity-75"
-            aria-label="Ir para a Home"
-            title="Home"
-            style={{ color: accentColor }}
-          >
-            <FaHome />
-          </Link>
+      <div className="flex w-full items-center gap-3 px-4 py-4 sm:px-6">
+        <Link
+          to="/"
+          className="flex h-12 w-12 shrink-0 items-center justify-center text-3xl transition hover:opacity-75"
+          aria-label="Ir para a Home"
+          title="Home"
+          style={{ color: accentColor }}
+        >
+          <FaHome />
+        </Link>
 
-          {isHome && <FormLoja />}
-          {isLoja && <FormProduto />}
-        </div>
-
-        <div
-          className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-3xl font-extrabold tracking-tight"
+        <span
+          className="truncate text-xl font-bold tracking-tight sm:text-3xl"
           style={{ color: accentColor }}
         >
           {pageTitle}
-        </div>
-
-        <div className="ml-auto h-14 w-14" aria-hidden="true" />
+        </span>
       </div>
     </nav>
   )
